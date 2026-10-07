@@ -21,7 +21,7 @@ llamafactory:
   dataset: null                 # set by the recipe
   dataset_dir: ${DATASET_DIR}
   media_dir: ${MEDIA_DIR}
-  cutoff_len: 8192
+  cutoff_len: 24576            # maximum sequence length stated in the paper
   max_samples: 100000
   overwrite_cache: false
   preprocessing_num_workers: 4

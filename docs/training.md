@@ -77,8 +77,10 @@ defaults to `DATASET_DIR`.
 
 `configs/sft/base.yaml` trains one epoch of LoRA (rank 64, alpha 128, all linear
 layers) with learning rate 1e-5 (cosine, 10% warm-up), batch 1 per device with
-gradient accumulation 8, cutoff length 8192, a frozen vision tower, and video at
-1 fps.
+gradient accumulation 8, maximum sequence length 24,576, a frozen vision tower, and
+video at 1 fps. The paper's effective batch size of 8 is per GPU: on the paper's 4
+GPUs (`--nproc-per-node 4`) each optimizer step uses 32 samples. With fewer GPUs,
+raise `gradient_accumulation_steps` with `--set` to keep 32.
 
 ## GRPO / ATPO (EasyR1)
 
