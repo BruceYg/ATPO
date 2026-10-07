@@ -1,0 +1,49 @@
+# XD-Violence training files of the paper (RL and SFT), built from canonical records.
+#
+# scripts/prepare_paper_data.sh creates the canonical records from the XD-Violence list files:
+#   train: train_list.txt entries whose videos are <= 300 s (configs/data/manifests/xdviolence_train.txt)
+#   val:   test_list.txt entries sampled with seed 42, in list order (configs/data/manifests/xdviolence_val.txt)
+#
+#   atpo prepare configs/data/xdviolence_paper.yaml --var CANONICAL=<dir> --var OUT=<dir>
+#
+# Video paths are stored relative to the XD-Violence video directory (train/..., test_videos/...):
+# use that directory as VIDEO_ROOT for RL training and as MEDIA_DIR for SFT.
+variables:
+  CANONICAL: {description: "directory with xdviolence_train.jsonl and xdviolence_val.jsonl"}
+  OUT: {description: "output directory"}
+  VIDEO_ROOT: {description: "XD-Violence video directory with train/ and test_videos/ (media checks only)", default: ""}
+  VIDEO_PATH_PREFIX: {description: "prefix stored before each video path", default: ""}
+taxonomy: xdviolence
+splits:
+  train: ${CANONICAL}/xdviolence_train.jsonl
+  val: ${CANONICAL}/xdviolence_val.jsonl
+video_root: ${VIDEO_ROOT}
+validate:
+  repeated_ids: error
+  repeated_videos: warn
+  check_media: none
+  split_overlap: error
+outputs:
+  - kind: easyr1
+    split: train
+    path: ${OUT}/xdviolence/train.parquet
+    prompt: {file: xdviolence/v1.txt, strip: true}
+    label_format: index
+    path_prefix: ${VIDEO_PATH_PREFIX}
+  - kind: easyr1
+    split: val
+    path: ${OUT}/xdviolence/val.parquet
+    prompt: {file: xdviolence/v1.txt, strip: true}
+    label_format: index
+    path_prefix: ${VIDEO_PATH_PREFIX}
+  # SFT targets are JSON after "GUARDRAIL:", although the prompt asks for "DETECTION:"
+  # (as in the paper's SFT data; the RL reward does not depend on the prefix)
+  - kind: sharegpt
+    split: train
+    path: ${OUT}/sft/xdviolence_train.jsonl
+    prompt: {file: xdviolence/v1.txt, strip: true}
+    target_style: json
+    block_name: GUARDRAIL
+    label_format: id
+    path_prefix: ${VIDEO_PATH_PREFIX}
+    dataset_name: xdviolence_sft

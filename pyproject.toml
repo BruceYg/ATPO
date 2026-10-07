@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atpo"
+version = "0.1.0.dev0"
+description = "Adaptive Tversky Policy Optimization (ATPO) for controllable multi-label video safety detection"
+readme = "README.md"
+requires-python = ">=3.10"
+# Third-party components keep their own licences (THIRD_PARTY_NOTICES.md).
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "ATPO authors" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Standalone inference with Hugging Face Transformers (no RL/SFT stack).
+inference = [
+    "torch>=2.4",
+    "transformers>=4.57.0",
+    "accelerate>=0.34",
+    "qwen-vl-utils>=0.0.14",
+    "av>=12",
+    "huggingface_hub>=0.25",
+    # torchvision >= 0.26 removed read_video; qwen-vl-utils then needs decord or torchcodec.
+    "decord>=0.6; sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+# Optional high-throughput backend. Install a vLLM build matching your CUDA/torch stack.
+vllm = ["vllm>=0.10"]
+# Data preparation (parquet output for EasyR1) and evaluation tables.
+# atpo filter-media decodes videos with decord (as the paper's filters did).
+data = ["pandas>=2.0", "pyarrow>=14", "decord>=0.6; sys_platform == 'linux' and platform_machine == 'x86_64'"]
+dev = ["pytest>=8", "pandas>=2.0", "pyarrow>=14", "scikit-learn>=1.3", "av>=12",
+       "decord>=0.6; sys_platform == 'linux' and platform_machine == 'x86_64'"]
+
+[project.scripts]
+atpo = "atpo.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["atpo*"]
+
+[tool.setuptools.package-data]
+"atpo.resources" = ["*.yaml", "**/*.yaml", "**/*.txt", "**/*.jinja", "**/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+markers = [
+    "gpu: requires a CUDA GPU and model weights (deselect with -m 'not gpu')",
+    "slow: long-running test",
+]
+addopts = "-m 'not gpu'"

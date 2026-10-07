@@ -1,0 +1,47 @@
+# XD-Violence six-category violence taxonomy as used in the ATPO experiments.
+# Category text is copied from the historical XD-Violence prompt v1
+# (prompts/xdviolence/v1.txt). Integer aliases are the 1-based labels used by the
+# historical EasyR1 parquets (B1 -> 1 ... B6 -> 6). Mapping from the original
+# XD-Violence annotation codes is handled by the dataset adapter, not here.
+name: xdviolence
+description: XD-Violence six-category violence detection taxonomy (ATPO experiments).
+block_name: DETECTION
+key_template: "{id}({name})"
+categories:
+  - id: B1
+    name: Fighting
+    aliases: ["1"]
+    description: >-
+      Physical confrontations between individuals, including punching, kicking, wrestling, or any form of
+      hand-to-hand combat. This includes street fights, brawls, martial arts violence in real contexts, and
+      physical altercations.
+  - id: B2
+    name: Shooting
+    aliases: ["2"]
+    description: >-
+      Use of firearms or guns, including gunshots, gun violence, armed confrontations, and shooting incidents.
+      This covers both targeted shootings and random gunfire.
+  - id: B3
+    name: Explosion
+    aliases: ["3"]
+    description: >-
+      Explosive events including bombs, detonations, blasts, fire explosions, and any sudden destructive events
+      caused by explosive materials or devices.
+  - id: B4
+    name: Riot
+    aliases: ["4"]
+    description: >-
+      Large-scale civil unrest, mob violence, crowd disturbances, protests turning violent, looting, vandalism by
+      groups, and collective violent behavior.
+  - id: B5
+    name: Abuse
+    aliases: ["5"]
+    description: >-
+      Physical or emotional abuse of individuals, including domestic violence, child abuse, elder abuse, bullying,
+      torture, or any form of harmful treatment of a person.
+  - id: B6
+    name: Car accident
+    aliases: ["6"]
+    description: >-
+      Vehicle crashes, collisions, traffic accidents, car wrecks, and any violent incidents involving motor
+      vehicles that result in damage or potential harm.

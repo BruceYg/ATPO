@@ -1,0 +1,30 @@
+# ATPO-G, c=2, XD-Violence, Qwen3-VL-8B (8 GPUs).
+# Validation uses a frozen controller by default; --validation historical restores the paper runs' adaptive validation reward.
+extends: ../easyr1/base.yaml
+name: xdviolence_qwen3vl_atpo_g
+description: ATPO-G, c=2, XD-Violence, Qwen3-VL-8B (8 GPUs).
+paper_data:   # files built by scripts/prepare_paper_data.sh; preflight notes if yours differ
+  train_file: xdviolence/train.parquet
+  train_fingerprint: 45a0506bca751d7faec4d39d724a24d766927c515a3592a9ab959419b339ad63
+  val_file: xdviolence/val.parquet
+  val_fingerprint: a86ea3f746cc6acf4ac9e612fba7c1047f1e17cfa725b318c2ebc9461a5b0ccd
+reward:
+  taxonomy: xdviolence
+  reward: atpo
+  response_format: triple_newline
+  parse_scope: answer_only
+  log_classification_metrics: true
+  controller:
+    mode: global
+    invalid_prediction_policy: as_empty
+    scale: 2.0
+validation: frozen
+easyr1:
+  data:
+    rollout_batch_size: 128
+  worker:
+    actor:
+      global_batch_size: 128
+      micro_batch_size_per_device_for_experience: 2
+  trainer:
+    n_gpus_per_node: 8

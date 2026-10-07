@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv*/
+# Local outputs, caches, data, and weights stay outside the repository.
+/outputs/
+/checkpoints/
+/models/exports/
+/data/
+/video_cache/
+*.pkl
+/wandb/

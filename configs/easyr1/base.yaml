@@ -1,0 +1,121 @@
+# EasyR1 settings shared by the SafeWatch and XD-Violence GRPO/ATPO configs, as used in the
+# paper's runs. Experiment configs extend this file.
+#
+# Differences from the paper's runs, all outside the optimisation itself:
+#   * paths are variables;
+#   * trainer.logger is ["file"] (the runs also logged to W&B; add it with
+#     `atpo train --logger file --logger wandb` and your own W&B credentials);
+#   * trainer.project_name is "atpo" (was "easy_r1");
+#   * the reward function is atpo/rewards/easyr1.py, and validation uses a frozen
+#     controller unless `validation: historical` (see docs/correctness_fixes.md).
+format: atpo.training/v1
+kind: easyr1
+
+variables:
+  TRAIN_FILE: {description: "EasyR1 training parquet (atpo prepare)"}
+  VAL_FILE: {description: "EasyR1 validation parquet (atpo prepare)"}
+  INIT_MODEL: {description: "SFT initialization: local directory or Hugging Face repo ID"}
+  VIDEO_ROOT: {description: "Directory that relative video paths in the parquet files are joined to (data.image_dir); null keeps paths relative to the run directory", default: null}
+  VIDEO_CACHE_DIR: {description: "Optional cache directory for preprocessed videos", default: null}
+
+easyr1:
+  data:
+    train_files: ${TRAIN_FILE}
+    val_files: ${VAL_FILE}
+    prompt_key: prompt
+    answer_key: response
+    image_key: Image
+    video_key: video_path
+    image_dir: ${VIDEO_ROOT}
+    video_fps: 1.0
+    max_prompt_length: 16384
+    max_response_length: 512
+    rollout_batch_size: 64
+    mini_rollout_batch_size: null
+    val_batch_size: 16
+    format_prompt: auto        # chosen from reward.response_format
+    override_chat_template: null
+    shuffle: true
+    seed: 1
+    min_pixels: 3136
+    max_pixels: 50176
+    filter_overlong_prompts: true
+    video_cache_dir: ${VIDEO_CACHE_DIR}
+    filter_overlong_prompts_workers: 1
+  algorithm:
+    adv_estimator: grpo
+    disable_kl: false
+    use_kl_loss: true
+    kl_penalty: low_var_kl
+    kl_coef: 0.01
+    online_filtering: false
+    filter_key: overall
+    filter_low: 0.01
+    filter_high: 0.99
+  worker:
+    actor:
+      global_batch_size: 64
+      micro_batch_size_per_device_for_update: 1
+      micro_batch_size_per_device_for_experience: 4
+      max_grad_norm: 1.0
+      padding_free: true
+      dynamic_batching: true
+      ulysses_size: 1
+      model:
+        model_path: ${INIT_MODEL}
+        enable_gradient_checkpointing: true
+        trust_remote_code: true
+        freeze_vision_tower: false
+      optim:
+        lr: 1.0e-06
+        weight_decay: 0.01
+        strategy: adamw
+        lr_warmup_ratio: 0.0
+      fsdp:
+        enable_full_shard: true
+        enable_cpu_offload: false
+        enable_rank0_init: true
+      offload:
+        offload_params: false
+        offload_optimizer: true
+    rollout:
+      'n': 8
+      temperature: 1.0
+      top_p: 1.0
+      limit_images: 0
+      gpu_memory_utilization: 0.6
+      enforce_eager: false
+      enable_chunked_prefill: false
+      tensor_parallel_size: 1
+      disable_tqdm: false
+      val_override_config:
+        temperature: 0.6
+        top_p: 0.95
+        'n': 1
+      max_num_batched_tokens: 65536
+    ref:
+      fsdp:
+        enable_full_shard: true
+        enable_cpu_offload: false
+        enable_rank0_init: true
+      offload:
+        offload_params: false
+  trainer:
+    total_epochs: 3
+    max_steps: null
+    project_name: atpo
+    experiment_name: auto      # the config name
+    logger: [file]
+    nnodes: 1
+    n_gpus_per_node: 4
+    max_try_make_batch: 20
+    val_freq: 5
+    val_before_train: false
+    val_only: false
+    val_generations_to_log: 1
+    save_freq: 5
+    save_limit: 3
+    save_model_only: false
+    save_checkpoint_path: auto  # <output_dir>/checkpoints
+    load_checkpoint_path: null
+    find_last_checkpoint: false

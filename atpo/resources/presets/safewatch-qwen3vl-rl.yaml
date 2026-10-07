@@ -1,0 +1,22 @@
+# Evaluation setting of the paper for Qwen3-VL-8B SafeWatch RL checkpoints
+# (Qwen3-VL SafeWatch query, stripped).
+name: safewatch-qwen3vl-rl
+description: >-
+  SafeWatch, Qwen3-VL RL checkpoints, prompt v3_qwen3 and the paper's video settings.
+taxonomy: safewatch
+prompt:
+  file: safewatch/v3_qwen3.txt
+  strip: true
+  sha256: 4aff6cc0588c473f9d1b2d21c7f8574f8cbd2ebf292b59ef000b73917db041fe
+system_prompt: You are a helpful video content moderation assistant.
+response_format: triple_newline
+video: {fps: 1.0, min_pixels: 12544, max_pixels: 200704, image_patch_size: 14, position: after}
+parser: {output_style: json, scope: full_response, require_block_prefix: true}
+generation: {max_new_tokens: 1024, temperature: 0.0, top_p: 1.0, top_k: -1, repetition_penalty: 1.0}
+base_model: Qwen/Qwen3-VL-8B-Instruct
+processor: {source: Qwen/Qwen3-VL-8B-Instruct, revision: null, use_fast: false}
+max_model_len: 98304
+provenance:
+  notes:
+    - image_patch_size 14 is the qwen-vl-utils default used in the paper's evaluation;
+      Qwen3-VL's native patch size is 16.

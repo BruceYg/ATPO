@@ -1,0 +1,21 @@
+# ATPO-G, c=2, SafeWatch, Qwen3-VL-8B.
+# Validation uses a frozen controller by default; --validation historical restores the paper runs' adaptive validation reward.
+extends: ../easyr1/base.yaml
+name: safewatch_qwen3vl_atpo_g
+description: ATPO-G, c=2, SafeWatch, Qwen3-VL-8B.
+paper_data:   # files built by scripts/prepare_paper_data.sh; preflight notes if yours differ
+  train_file: safewatch/train.parquet
+  train_fingerprint: 0ff81f1ec8e96349d056d7fa5289bf75323f0f912c64382ba7945d23248fea1e
+  val_file: safewatch/val.parquet
+  val_fingerprint: 11ee1df8d06296e7db30a58253d18630046848a8d590aed0c14ead84bd73ba56
+reward:
+  taxonomy: safewatch
+  reward: atpo
+  response_format: triple_newline
+  parse_scope: answer_only
+  log_classification_metrics: true
+  controller:
+    mode: global
+    invalid_prediction_policy: as_empty
+    scale: 2.0
+validation: frozen

@@ -1,0 +1,15 @@
+# SafeWatch SFT (prompt v5, targets "GUARDRAIL: C1, C3"), Qwen3-VL-8B: the one-epoch LoRA SFT that initializes RL in the paper.
+# The paper's runs used 4 GPUs (--nproc-per-node 4); settings shared by all four SFT configs are in base.yaml.
+extends: base.yaml
+name: sft_safewatch_qwen3vl
+description: "SafeWatch SFT (prompt v5, targets \"GUARDRAIL: C1, C3\"), Qwen3-VL-8B. One-epoch LoRA SFT used to initialize RL."
+variables:
+  BASE_MODEL: {description: "Base model (Hugging Face ID or local path)", default: Qwen/Qwen3-VL-8B-Instruct}
+  DATASET: {description: "Dataset name in DATASET_DIR/dataset_info.json", default: safewatch_sft}
+llamafactory:
+  model_name_or_path: ${BASE_MODEL}
+  template: qwen3_vl_nothink
+  dataset: ${DATASET}
+export:
+  model_name_or_path: ${BASE_MODEL}
+  template: qwen3_vl_nothink

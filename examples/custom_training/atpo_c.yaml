@@ -1,0 +1,10 @@
+# ATPO-C (per-category alpha/beta) with per-category targets.
+extends: atpo_g.yaml
+name: workplace_atpo_c
+description: "ATPO-C on the workplace-safety example taxonomy, recall-leaning for W2."
+reward:
+  controller:
+    mode: category
+    target_ratio: {W1: 1.0, W2: 0.5, W3: 1.0}
+    scale: 2.0
+    invalid_prediction_policy: exclude

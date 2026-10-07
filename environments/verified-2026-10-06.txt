@@ -1,0 +1,25 @@
+# Environment in which the release was tested on 2026-10-06/07:
+#   - full test suite (CPU), including the EasyR1 patch tests with real Ray reward workers;
+#   - GPU inference smoke tests (Transformers and vLLM backends) on one NVIDIA GeForce RTX 3090
+#     (24 GB, driver 610.60, CUDA 13.0), WSL2, Linux x86-64.
+# python 3.12.12
+torch==2.11.0
+torchvision==0.26.0
+transformers==5.9.0
+vllm==0.21.0
+flashinfer-python==0.6.8.post1
+qwen-vl-utils==0.0.14
+accelerate==1.15.0
+huggingface-hub==1.33.0
+av==19.0.1
+decord==0.6.0
+numpy==2.2.6
+pyyaml==6.0.3
+pandas==3.0.6
+pyarrow==25.0.1
+scikit-learn==1.9.1
+pytest==9.1.1
+matplotlib==3.11.2
+ray==2.53.0
+omegaconf==2.3.1
+tensordict==0.14.2

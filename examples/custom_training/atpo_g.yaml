@@ -1,0 +1,27 @@
+# ATPO-G (one global alpha/beta) on the custom taxonomy.
+#   atpo train --config examples/custom_training/atpo_g.yaml --output-dir runs/atpo_g \
+#     --var TRAIN_FILE=atpo_example/easyr1/train.parquet \
+#     --var VAL_FILE=atpo_example/easyr1/val.parquet \
+#     --var VIDEO_ROOT=atpo_example/videos --var INIT_MODEL=<SFT model or base model>
+# The initialization must already answer in the RESULT format reasonably often (an SFT
+# warm-up on this taxonomy, or a base model prompted well); a paper checkpoint trained on
+# SafeWatch is not aligned to a new taxonomy.
+extends: ../../configs/easyr1/base.yaml
+name: workplace_atpo_g
+description: "ATPO-G on the workplace-safety example taxonomy."
+reward:
+  taxonomy: taxonomy.yaml          # resolved relative to this file and inlined at launch
+  reward: atpo
+  response_format: think_answer    # Qwen3-VL recipes used triple_newline
+  parse_scope: answer_only
+  format_weight: 0.1
+  log_classification_metrics: true
+  controller:
+    mode: global
+    target_ratio: 1.0              # r* = FN/FP; >1 favours precision, <1 favours recall
+    scale: 2.0                     # alpha + beta = 2, so the start (1, 1) is Jaccard
+    invalid_prediction_policy: as_empty
+validation: frozen
+easyr1:
+  trainer:
+    n_gpus_per_node: 4

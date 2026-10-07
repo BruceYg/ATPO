@@ -1,0 +1,19 @@
+# Example taxonomy for training ATPO on your own categories.
+# id:          short identifier used in labels and in the model output keys
+# name:        human-readable name, shown to the model as "<id>(<name>)"
+# description: definition shown to the model in the task prompt
+name: workplace-safety
+block_name: RESULT            # the model answers 'RESULT: {"W1(No helmet)": true, ...}'
+description: >-
+  You are a video safety classifier for workplace footage. Your task is to analyze the
+  video and decide which of the following safety violations it contains.
+categories:
+  - id: W1
+    name: No helmet
+    description: A person in a marked construction area without a hard hat.
+  - id: W2
+    name: Fire or smoke
+    description: Visible flames or smoke that is not part of a controlled process.
+  - id: W3
+    name: Fall
+    description: A person or object falling from height, or a collapsing structure.

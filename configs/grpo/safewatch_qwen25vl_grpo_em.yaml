@@ -1,0 +1,18 @@
+# GRPO with the exact-match reward, SafeWatch, Qwen2.5-VL-7B.
+# Settings as in configs/grpo/safewatch_qwen25vl_grpo_str.yaml except the reward, including
+# full-response parsing.
+extends: ../easyr1/base.yaml
+name: safewatch_qwen25vl_grpo_em
+description: GRPO with the exact-match reward, SafeWatch, Qwen2.5-VL-7B.
+paper_data:   # files built by scripts/prepare_paper_data.sh; preflight notes if yours differ
+  train_file: safewatch/train.parquet
+  train_fingerprint: 0ff81f1ec8e96349d056d7fa5289bf75323f0f912c64382ba7945d23248fea1e
+  val_file: safewatch/val.parquet
+  val_fingerprint: 11ee1df8d06296e7db30a58253d18630046848a8d590aed0c14ead84bd73ba56
+reward:
+  taxonomy: safewatch
+  reward: exact_match
+  response_format: think_answer
+  parse_scope: full_response
+  log_classification_metrics: true
+validation: frozen

@@ -1,0 +1,31 @@
+# Build SFT (LLaMA-Factory) and RL (EasyR1) files from canonical records.
+#   atpo prepare examples/custom_training/data_recipe.yaml --var DATA_DIR=atpo_example
+taxonomy: taxonomy.yaml
+splits:
+  train: ${DATA_DIR}/train.jsonl
+  val: ${DATA_DIR}/val.jsonl
+  test: ${DATA_DIR}/test.jsonl
+video_root: ${DATA_DIR}/videos
+validate:
+  repeated_ids: error
+  repeated_videos: error
+  check_media: exists
+  split_overlap: error
+outputs:
+  # RL: prompt column = rendered task prompt + " <video>"; the answer-format
+  # instruction is appended at training time from the reward's response_format.
+  - kind: easyr1
+    split: train
+    path: ${DATA_DIR}/easyr1/train.parquet
+    prompt: {render: true}
+  - kind: easyr1
+    split: val
+    path: ${DATA_DIR}/easyr1/val.parquet
+    prompt: {render: true}
+  # SFT warm-up: same task prompt, JSON targets 'RESULT: {...}'.
+  - kind: sharegpt
+    split: train
+    path: ${DATA_DIR}/sft/train.jsonl
+    prompt: {render: true}
+    target_style: json
+    dataset_name: workplace_sft

@@ -61,6 +61,10 @@ from .metrics import (
 )
 
 
+# ATPO release patch: files holding reward-controller state inside global_step_* folders.
+REWARD_STATE_FILES = {"train": "reward_state.json", "val": "val_reward_state.json"}
+
+
 class Role(IntEnum):
     """
     To create more roles dynamically, you can subclass Role and add new members
@@ -329,6 +333,9 @@ class RayPPOTrainer:
         dataloader_state_dict = self.train_dataloader.state_dict()
         torch.save(dataloader_state_dict, dataloader_path)
 
+        # ATPO release patch: save reward-controller state before the tracker points at this checkpoint.
+        self._save_reward_states(folder_path)
+
         checkpointer_tracker_info = {
             "best_global_step": self.best_global_step,
             "best_val_reward_score": round(self.best_val_reward_score, 4),
@@ -370,6 +377,58 @@ class RayPPOTrainer:
             self.train_dataloader.load_state_dict(dataloader_state_dict)
         else:
             print(f"No dataloader state found at {dataloader_path}, will start from scratch.")
+
+        # ATPO release patch: restore reward-controller state saved with the checkpoint.
+        self._load_reward_states(load_checkpoint_path)
+
+    def _reward_managers(self):
+        return (("train", self.reward_fn), ("val", self.val_reward_fn))
+
+    def _save_reward_states(self, folder_path: str) -> None:
+        for name, manager in self._reward_managers():
+            if manager is None:
+                continue
+            state = ray.get(manager.get_reward_state.remote())
+            if state is None:
+                continue
+            path = os.path.join(folder_path, REWARD_STATE_FILES[name])
+            tmp_path = path + ".tmp"
+            with open(tmp_path, "w") as f:
+                json.dump(state, f, ensure_ascii=False, indent=2)
+            os.replace(tmp_path, path)
+
+    def _load_reward_states(self, folder_path: str) -> None:
+        for name, manager in self._reward_managers():
+            if manager is None:
+                continue
+            path = os.path.join(folder_path, REWARD_STATE_FILES[name])
+            if os.path.exists(path):
+                with open(path) as f:
+                    state = json.load(f)
+                ray.get(
+                    manager.set_reward_state.remote(state, self.config.trainer.allow_reward_config_change)
+                )
+                print(f"Restored {name} reward state from {path}.")
+            elif ray.get(manager.is_stateful.remote()):
+                message = (
+                    f"Checkpoint {folder_path} has no {REWARD_STATE_FILES[name]}, but the {name} reward keeps "
+                    "controller state. Set trainer.allow_missing_reward_state=true to resume with a freshly "
+                    "initialized controller."
+                )
+                if not self.config.trainer.allow_missing_reward_state:
+                    raise RuntimeError(message)
+                print(f"WARNING: {message} Continuing with a re-initialized controller.")
+
+    def _check_reward_call_pattern(self) -> None:
+        """Stateful rewards must see exactly one training reward call per step."""
+        if self.reward_fn is None or not ray.get(self.reward_fn.is_stateful.remote()):
+            return
+        if self.config.algorithm.online_filtering or self.config.algorithm.adv_estimator == "remax":
+            raise NotImplementedError(
+                "The training reward keeps controller state, but online_filtering or adv_estimator=remax would call "
+                "it several times per step (unfiltered or baseline generations), changing the controller update "
+                "schedule. Disable them for ATPO."
+            )
 
     def _maybe_log_val_generations(
         self, inputs: list[str], outputs: list[str], labels: list[str], scores: list[float]
@@ -571,6 +630,8 @@ class RayPPOTrainer:
         self.global_step = 0
         main_tqdm = tqdm(range(self.training_steps), desc="Running step", position=0)
         val_metrics: Optional[dict[str, Any]] = None
+
+        self._check_reward_call_pattern()
 
         # load checkpoint before doing anything
         self._load_checkpoint()

@@ -1,0 +1,108 @@
+# Named checkpoint references: `atpo predict --model <name>`, VideoSafetyModel.from_pretrained(<name>).
+#
+# No checkpoint has been published yet: hub_id and revision stay null until upload, and
+# training_config is filled in for each RL checkpoint when it is published. Until then a
+# name can point at a local directory or a private repository:
+#   ATPO_MODEL_<NAME>=<path or repo id>  [ATPO_MODEL_<NAME>_REVISION=<revision>]
+#     (NAME upper-cased; characters other than letters and digits become '_')
+#   ATPO_MODELS_FILE=my_models.yaml   (this layout; give `path` or `hub_id` per name)
+# inference_preset applies only to checkpoints without atpo_config.json.
+# This file is mirrored at atpo/resources/models.yaml (tests check that both are equal).
+format: atpo.model_index/v1
+models:
+  safewatch-qwen2.5vl-sft:
+    description: SafeWatch SFT initialization, Qwen2.5-VL-7B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen2.5-VL-7B-Instruct
+    inference_preset: safewatch-qwen2.5vl-sft
+    training_config: configs/sft/safewatch_qwen25vl.yaml
+    status: not published
+  safewatch-qwen2.5vl-atpo-g:
+    description: SafeWatch ATPO-G, Qwen2.5-VL-7B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen2.5-VL-7B-Instruct
+    inference_preset: safewatch-qwen2.5vl-rl
+    training_config: null
+    status: not published
+  safewatch-qwen2.5vl-atpo-c:
+    description: SafeWatch ATPO-C, Qwen2.5-VL-7B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen2.5-VL-7B-Instruct
+    inference_preset: safewatch-qwen2.5vl-rl
+    training_config: null
+    status: not published
+  safewatch-qwen3vl-sft:
+    description: SafeWatch SFT initialization, Qwen3-VL-8B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen3-VL-8B-Instruct
+    inference_preset: safewatch-qwen3vl-sft
+    training_config: configs/sft/safewatch_qwen3vl.yaml
+    status: not published
+  safewatch-qwen3vl-atpo-g:
+    description: SafeWatch ATPO-G, Qwen3-VL-8B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen3-VL-8B-Instruct
+    inference_preset: safewatch-qwen3vl-rl
+    training_config: null
+    status: not published
+  safewatch-qwen3vl-atpo-c:
+    description: SafeWatch ATPO-C, Qwen3-VL-8B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen3-VL-8B-Instruct
+    inference_preset: safewatch-qwen3vl-rl
+    training_config: null
+    status: not published
+  xdviolence-qwen2.5vl-sft:
+    description: XD-Violence SFT initialization, Qwen2.5-VL-7B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen2.5-VL-7B-Instruct
+    inference_preset: xdviolence-qwen2.5vl-sft
+    training_config: configs/sft/xdviolence_qwen25vl.yaml
+    status: not published
+  xdviolence-qwen2.5vl-atpo-g:
+    description: XD-Violence ATPO-G, Qwen2.5-VL-7B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen2.5-VL-7B-Instruct
+    inference_preset: xdviolence-qwen2.5vl-rl
+    training_config: null
+    status: not published
+  xdviolence-qwen2.5vl-atpo-c:
+    description: XD-Violence ATPO-C, Qwen2.5-VL-7B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen2.5-VL-7B-Instruct
+    inference_preset: xdviolence-qwen2.5vl-rl
+    training_config: null
+    status: not published
+  xdviolence-qwen3vl-sft:
+    description: XD-Violence SFT initialization, Qwen3-VL-8B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen3-VL-8B-Instruct
+    inference_preset: xdviolence-qwen3vl-sft
+    training_config: configs/sft/xdviolence_qwen3vl.yaml
+    status: not published
+  xdviolence-qwen3vl-atpo-g:
+    description: XD-Violence ATPO-G, Qwen3-VL-8B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen3-VL-8B-Instruct
+    inference_preset: xdviolence-qwen3vl-rl
+    training_config: null
+    status: not published
+  xdviolence-qwen3vl-atpo-c:
+    description: XD-Violence ATPO-C, Qwen3-VL-8B-Instruct
+    hub_id: null
+    revision: null
+    base_model: Qwen/Qwen3-VL-8B-Instruct
+    inference_preset: xdviolence-qwen3vl-rl
+    training_config: null
+    status: not published

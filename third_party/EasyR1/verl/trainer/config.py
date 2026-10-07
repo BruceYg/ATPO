@@ -142,6 +142,11 @@ class TrainerConfig:
     """file to save ray timeline"""
     find_last_checkpoint: bool = True
     """automatically find the last checkpoint in the save checkpoint path to resume training"""
+    allow_missing_reward_state: bool = False
+    """ATPO release patch: resume from a checkpoint without saved reward-controller state; the controller restarts
+    from its initial values (the behaviour of the original EasyR1 fork)"""
+    allow_reward_config_change: bool = False
+    """ATPO release patch: restore reward-controller state even if the reward configuration changed since it was saved"""
 
     def post_init(self):
         if self.save_checkpoint_path is None:

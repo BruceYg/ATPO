@@ -1,0 +1,24 @@
+# SFT checkpoints trained on prompt v5 with targets "GUARDRAIL: C2, C3".
+# Uses the SFT training prompt and the "simple" parser.
+name: safewatch-qwen2.5vl-sft
+description: >-
+  SafeWatch SFT checkpoints (prompt v5, simple "GUARDRAIL: C1, C3" output), following
+  the SFT training data.
+taxonomy: safewatch
+prompt:
+  file: safewatch/v5.txt
+  strip: true
+  sha256: fde9babb478d48cb7ad7464fa840832aa372397b3cb610bc69e877cc488cd93d
+system_prompt: You are a helpful video content moderation assistant.
+response_format: plain
+video: {fps: 1.0, min_pixels: 12544, max_pixels: 200704, image_patch_size: 14, position: after}
+parser: {output_style: simple, scope: full_response, require_block_prefix: true}
+generation: {max_new_tokens: 1024, temperature: 0.0, top_p: 1.0, top_k: -1, repetition_penalty: 1.0}
+base_model: Qwen/Qwen2.5-VL-7B-Instruct
+processor: {source: Qwen/Qwen2.5-VL-7B-Instruct, revision: null, use_fast: false}
+max_model_len: 98304
+provenance:
+  notes:
+    - SFT training used the LLaMA-Factory default system prompt and "<prompt> <video>" user text.
+    - The paper's "simple" parser treated a response without any category ID as benign;
+      this preset requires the "GUARDRAIL:" prefix and reports other outputs as parse errors.

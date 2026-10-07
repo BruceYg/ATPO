@@ -130,10 +130,35 @@ class AutoRewardManager(BatchFunctionRewardManagerMixin, SequentialFunctionRewar
         reward_type = getattr(module, "REWARD_TYPE", "batch")
         print(f"Using reward function `{config.reward_function_name}` from `{config.reward_function}`.")
         print(f"Reward name: {reward_name}, reward type: {reward_type}.")
+        # ATPO release patch: validate stateful reward modules at start-up, before any rollout.
+        if hasattr(module, "configure"):
+            module.configure(**config.reward_function_kwargs)
+        self.module = module
         self.reward_fn = partial(reward_fn, **config.reward_function_kwargs)
         self.reward_type = reward_type
         self.config = config
         self.tokenizer = tokenizer
+
+    # ATPO release patch: controller state checkpointing. Reward modules opt in by
+    # defining get_state() / set_state(state, allow_config_change) (and optionally is_stateful()).
+    def reward_state_supported(self) -> bool:
+        return hasattr(self.module, "get_state") and hasattr(self.module, "set_state")
+
+    def is_stateful(self) -> bool:
+        if not self.reward_state_supported():
+            return False
+        is_stateful = getattr(self.module, "is_stateful", None)
+        return bool(is_stateful()) if is_stateful is not None else True
+
+    def get_reward_state(self) -> Optional[dict]:
+        if not self.reward_state_supported():
+            return None
+        return self.module.get_state()
+
+    def set_reward_state(self, state: dict, allow_config_change: bool = False) -> None:
+        if not self.reward_state_supported():
+            raise RuntimeError(f"Reward function {self.config.reward_function} cannot restore saved state.")
+        self.module.set_state(state, allow_config_change=allow_config_change)
 
     def compute_reward(self, data: DataProto) -> Tuple[torch.Tensor, dict[str, list[float]]]:
         """Compute reward for a batch of data."""

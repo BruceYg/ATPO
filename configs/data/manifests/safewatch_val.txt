@@ -1,0 +1,202 @@
+# ATPO split manifest: SafeWatch validation videos used during RL training.
+# selection: SafeWatch-Bench (genai + real), atpo select --n 200 --seed 123 --method random_sample.
+genai/C2/abuse_benchmark/8.mp4
+genai/C6/incitement to violence_benchmark/6.mp4
+genai/C2/sexual bullying_benchmark/11.mp4
+real/C2/benign_benchmark/29.mp4
+genai/C6/incitement to violence_benchmark/11.mp4
+genai/C3/fighting_benchmark/6.mp4
+genai/C1/hentai_benchmark/18.mp4
+real/C2/abuse_benchmark/12.mp4
+real/C4/benign_benchmark/21.mp4
+real/C4/out-of-date_benchmark/24.mp4
+real/C1/hentai_benchmark/16.mp4
+real/C1/implication_benchmark/8.mp4
+genai/C2/abuse_benchmark/2.mp4
+genai/C4/benign_benchmark/24.mp4
+genai/C3/vandalism_benchmark/16.mp4
+real/C1/implication_benchmark/1.mp4
+real/C4/out-of-date_benchmark/21.mp4
+real/C1/hentai_benchmark/19.mp4
+genai/C6/extremely disturbing content_benchmark/1.mp4
+genai/C4/misinformation_benchmark/8.mp4
+genai/C1/benign_benchmark/12.mp4
+real/C3/assault_benchmark/28.mp4
+genai/C2/sexual bullying_benchmark/13.mp4
+real/C5/robbery and burglary_benchmark/14.mp4
+real/C2/abuse_benchmark/9.mp4
+genai/C2/benign_benchmark/18.mp4
+genai/C1/benign_benchmark/21.mp4
+real/C1/evident_benchmark/32.mp4
+real/C3/benign_benchmark/16.mp4
+genai/C3/benign_benchmark/12.mp4
+genai/C1/subtle_benchmark/5.mp4
+genai/C3/assault_benchmark/8.mp4
+real/C6/incitement to violence_benchmark/17.mp4
+genai/C4/aigc content_benchmark/6.mp4
+genai/C3/shooting_benchmark/12.mp4
+genai/C1/evident_benchmark/20.mp4
+real/C1/benign_benchmark/8.mp4
+real/C3/assault_benchmark/16.mp4
+real/C5/arson and explosion_benchmark/22.mp4
+real/C3/sexual violence_benchmark/24.mp4
+genai/C6/incitement to violence_benchmark/5.mp4
+real/C3/sexual violence_benchmark/9.mp4
+genai/C1/hentai_benchmark/11.mp4
+real/C1/evident_benchmark/10.mp4
+real/C1/implication_benchmark/14.mp4
+real/C4/aigc content_benchmark/16.mp4
+real/C3/shooting_benchmark/12.mp4
+genai/C5/benign_benchmark/19.mp4
+real/C5/war and military actions_benchmark/3.mp4
+real/C6/extremely disturbing content_benchmark/19.mp4
+real/C4/benign_benchmark/2.mp4
+real/C5/arson and explosion_benchmark/4.mp4
+real/C1/evident_benchmark/31.mp4
+genai/C1/evident_benchmark/10.mp4
+real/C2/benign_benchmark/10.mp4
+real/C6/incitement to mental depression_benchmark/4.mp4
+real/C4/acting_benchmark/23.mp4
+real/C3/assault_benchmark/24.mp4
+real/C4/benign_benchmark/25.mp4
+real/C6/extremely disturbing content_benchmark/18.mp4
+real/C6/incitement to violence_benchmark/16.mp4
+real/C5/robbery and burglary_benchmark/12.mp4
+real/C3/shooting_benchmark/18.mp4
+real/C4/aigc content_benchmark/14.mp4
+real/C6/incitement to violence_benchmark/20.mp4
+real/C2/sexual bullying_benchmark/8.mp4
+real/C2/abuse_benchmark/3.mp4
+real/C4/acting_benchmark/17.mp4
+genai/C1/hentai_benchmark/4.mp4
+real/C6/incitement to mental depression_benchmark/2.mp4
+genai/C4/out-of-date_benchmark/19.mp4
+genai/C2/sexual bullying_benchmark/6.mp4
+real/C3/shooting_benchmark/20.mp4
+real/C6/incitement to mental depression_benchmark/28.mp4
+genai/C6/incitement to mental depression_benchmark/21.mp4
+genai/C4/misinformation_benchmark/21.mp4
+real/C1/hentai_benchmark/21.mp4
+real/C4/out-of-date_benchmark/8.mp4
+real/C2/animal_abuse_benchmark/5.mp4
+genai/C2/benign_benchmark/25.mp4
+real/C3/fighting_benchmark/8.mp4
+real/C2/abuse_benchmark/29.mp4
+real/C5/arson and explosion_benchmark/21.mp4
+real/C1/hentai_benchmark/24.mp4
+genai/C1/evident_benchmark/25.mp4
+genai/C5/arson and explosion_benchmark/20.mp4
+real/C5/drugs_benchmark/1.mp4
+genai/C3/assault_benchmark/2.mp4
+real/C6/benign_benchmark/27.mp4
+real/C1/subtle_benchmark/30.mp4
+genai/C1/evident_benchmark/11.mp4
+real/C1/subtle_benchmark/6.mp4
+genai/C6/benign_benchmark/16.mp4
+real/C2/benign_benchmark/25.mp4
+real/C4/benign_benchmark/12.mp4
+real/C3/vandalism_benchmark/24.mp4
+genai/C2/animal_abuse_benchmark/5.mp4
+genai/C6/suicide and self-harm_benchmark/38.mp4
+real/C3/vandalism_benchmark/11.mp4
+real/C6/extremely disturbing content_benchmark/1.mp4
+genai/C6/benign_benchmark/23.mp4
+real/C4/misinformation_benchmark/12.mp4
+real/C3/shooting_benchmark/13.mp4
+genai/C4/out-of-date_benchmark/11.mp4
+genai/C4/benign_benchmark/12.mp4
+real/C3/benign_benchmark/8.mp4
+real/C2/abuse_benchmark/11.mp4
+real/C3/fighting_benchmark/17.mp4
+genai/C1/subtle_benchmark/13.mp4
+genai/C1/benign_benchmark/5.mp4
+genai/C3/vandalism_benchmark/13.mp4
+real/C3/fighting_benchmark/7.mp4
+genai/C5/arson and explosion_benchmark/11.mp4
+genai/C6/incitement to mental depression_benchmark/11.mp4
+genai/C6/suicide and self-harm_benchmark/15.mp4
+real/C6/extremely disturbing content_benchmark/9.mp4
+real/C2/sexual bullying_benchmark/9.mp4
+genai/C1/benign_benchmark/1.mp4
+genai/C3/fighting_benchmark/1.mp4
+real/C6/benign_benchmark/5.mp4
+genai/C2/benign_benchmark/3.mp4
+real/C4/acting_benchmark/18.mp4
+real/C1/subtle_benchmark/13.mp4
+genai/C3/assault_benchmark/3.mp4
+real/C3/assault_benchmark/22.mp4
+genai/C1/benign_benchmark/25.mp4
+real/C4/benign_benchmark/20.mp4
+real/C4/misinformation_benchmark/17.mp4
+real/C6/extremely disturbing content_benchmark/11.mp4
+real/C2/benign_benchmark/22.mp4
+genai/C1/evident_benchmark/35.mp4
+real/C1/evident_benchmark/46.mp4
+genai/C6/incitement to mental depression_benchmark/23.mp4
+real/C3/sexual violence_benchmark/15.mp4
+genai/C1/hentai_benchmark/6.mp4
+real/C4/out-of-date_benchmark/23.mp4
+real/C2/child_abuse_benchmark/5.mp4
+real/C1/implication_benchmark/24.mp4
+genai/C1/evident_benchmark/5.mp4
+real/C6/extremely disturbing content_benchmark/13.mp4
+real/C2/sexual bullying_benchmark/7.mp4
+genai/C2/benign_benchmark/6.mp4
+real/C6/suicide and self-harm_benchmark/21.mp4
+genai/C4/aigc content_benchmark/13.mp4
+real/C1/subtle_benchmark/48.mp4
+genai/C6/benign_benchmark/27.mp4
+genai/C2/child_abuse_benchmark/2.mp4
+real/C6/benign_benchmark/26.mp4
+genai/C2/abuse_benchmark/11.mp4
+real/C4/aigc content_benchmark/10.mp4
+real/C4/benign_benchmark/23.mp4
+real/C1/evident_benchmark/13.mp4
+genai/C4/aigc content_benchmark/9.mp4
+real/C6/incitement to mental depression_benchmark/24.mp4
+real/C1/benign_benchmark/7.mp4
+real/C2/animal_abuse_benchmark/1.mp4
+real/C1/subtle_benchmark/40.mp4
+genai/C3/shooting_benchmark/14.mp4
+real/C4/benign_benchmark/18.mp4
+real/C1/implication_benchmark/2.mp4
+real/C4/aigc content_benchmark/7.mp4
+genai/C3/sexual violence_benchmark/5.mp4
+real/C6/benign_benchmark/30.mp4
+genai/C4/misinformation_benchmark/14.mp4
+real/C5/drugs_benchmark/7.mp4
+real/C2/abuse_benchmark/27.mp4
+real/C3/assault_benchmark/20.mp4
+genai/C2/benign_benchmark/2.mp4
+genai/C4/acting_benchmark/2.mp4
+real/C3/fighting_benchmark/4.mp4
+real/C6/incitement to violence_benchmark/19.mp4
+genai/C1/evident_benchmark/9.mp4
+real/C1/subtle_benchmark/1.mp4
+real/C3/benign_benchmark/19.mp4
+real/C3/benign_benchmark/21.mp4
+real/C1/evident_benchmark/8.mp4
+real/C3/assault_benchmark/13.mp4
+genai/C1/evident_benchmark/31.mp4
+genai/C4/benign_benchmark/22.mp4
+real/C1/hentai_benchmark/1.mp4
+real/C4/aigc content_benchmark/6.mp4
+real/C4/aigc content_benchmark/2.mp4
+real/C4/out-of-date_benchmark/12.mp4
+genai/C4/acting_benchmark/7.mp4
+real/C3/vandalism_benchmark/22.mp4
+genai/C3/fighting_benchmark/15.mp4
+real/C4/misinformation_benchmark/15.mp4
+real/C1/subtle_benchmark/41.mp4
+genai/C5/war and military actions_benchmark/10.mp4
+real/C5/arson and explosion_benchmark/15.mp4
+real/C1/implication_benchmark/7.mp4
+genai/C3/assault_benchmark/9.mp4
+real/C4/acting_benchmark/9.mp4
+genai/C6/extremely disturbing content_benchmark/3.mp4
+genai/C5/benign_benchmark/8.mp4
+real/C1/evident_benchmark/45.mp4
+genai/C6/incitement to violence_benchmark/2.mp4
+genai/C1/subtle_benchmark/4.mp4
+real/C3/vandalism_benchmark/23.mp4
+genai/C2/child_abuse_benchmark/4.mp4

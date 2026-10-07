@@ -1,0 +1,61 @@
+# SafeWatch training files of the paper (RL and SFT), built from canonical records.
+#
+# scripts/prepare_paper_data.sh creates the canonical records from the dataset annotations:
+#   train: SafeWatch-Bench-200K full videos <= 120 s with >= 2 decoded frames
+#          (configs/data/manifests/safewatch_train.txt; videos listed twice upstream stay twice)
+#   val:   SafeWatch-Bench videos sampled with seed 123 (configs/data/manifests/safewatch_val.txt);
+#          benign videos carry their folder's category, as in the paper's runs
+#
+#   atpo prepare configs/data/safewatch_paper.yaml --var CANONICAL=<dir> --var OUT=<dir>
+#
+# Video paths are stored relative to the SafeWatch video directory (train/..., test/...):
+# use that directory as VIDEO_ROOT for RL training and as MEDIA_DIR for SFT.
+variables:
+  CANONICAL: {description: "directory with safewatch_train.jsonl and safewatch_val.jsonl"}
+  OUT: {description: "output directory"}
+  VIDEO_ROOT: {description: "SafeWatch video directory with train/ and test/ (media checks only)", default: ""}
+  VIDEO_PATH_PREFIX: {description: "prefix stored before each video path", default: ""}
+taxonomy: safewatch
+splits:
+  train: ${CANONICAL}/safewatch_train.jsonl
+  val: ${CANONICAL}/safewatch_val.jsonl
+video_root: ${VIDEO_ROOT}
+validate:
+  repeated_ids: warn          # videos listed twice upstream are kept twice
+  repeated_videos: warn
+  check_media: none           # use `atpo validate-data --check-media exists` with VIDEO_ROOT
+  split_overlap: error
+outputs:
+  # RL training file
+  - kind: easyr1
+    split: train
+    path: ${OUT}/safewatch/train.parquet
+    prompt: {file: safewatch/v3.txt, strip: true}
+    label_format: index
+    path_prefix: ${VIDEO_PATH_PREFIX}
+  # The same rows plus one extra copy of every row labelled C2 (Harassment & Bullying),
+  # appended at the end; used by the ATPO-C configs and the ATPO-G r*=1 config
+  - kind: easyr1
+    split: train
+    path: ${OUT}/safewatch/train_oversample_c2.parquet
+    prompt: {file: safewatch/v3.txt, strip: true}
+    label_format: index
+    path_prefix: ${VIDEO_PATH_PREFIX}
+    oversample: [2]
+  # RL validation file
+  - kind: easyr1
+    split: val
+    path: ${OUT}/safewatch/val.parquet
+    prompt: {file: safewatch/v3.txt, strip: true}
+    label_format: index
+    path_prefix: ${VIDEO_PATH_PREFIX}
+  # SFT file: targets "GUARDRAIL: C2, C3"; benign "GUARDRAIL: "
+  - kind: sharegpt
+    split: train
+    path: ${OUT}/sft/safewatch_train.jsonl
+    prompt: {file: safewatch/v5.txt, strip: true}
+    target_style: simple
+    label_format: index
+    path_prefix: ${VIDEO_PATH_PREFIX}
+    extra_fields: [subcategories]
+    dataset_name: safewatch_sft
