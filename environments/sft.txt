@@ -1,0 +1,13 @@
+# LoRA SFT with LLaMA-Factory at commit 591fc9ed (0.9.4.dev0, the version the SFT configs
+# are checked against), on the paper's PyTorch 2.8.0 / CUDA 12.8. This LLaMA-Factory accepts
+# Transformers <= 4.57.1, so this environment uses 4.57.1 rather than the 4.57.3 of the RL stack.
+#   pip install -r environments/sft.txt
+torch==2.8.0
+torchvision==0.23.0
+transformers==4.57.1
+peft==0.17.1
+accelerate==1.11.0
+datasets>=2.16.0,<=4.0.0
+qwen-vl-utils
+av
+llamafactory @ git+https://github.com/hiyouga/LLaMA-Factory.git@591fc9ed025100c40a2687431a7d83a19978e42d

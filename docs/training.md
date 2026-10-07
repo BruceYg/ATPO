@@ -18,8 +18,9 @@ resolved against the directory you launch from when the configuration is compose
 
 ## Environments
 
-- **SFT:** needs LLaMA-Factory (`llamafactory-cli` on `PATH`).
-- **RL:** needs the vendored EasyR1 and its requirements (`third_party/EasyR1/requirements.txt`).
+- **SFT:** needs LLaMA-Factory (`llamafactory-cli` on `PATH`); `environments/sft.txt`.
+- **RL:** needs the vendored EasyR1's requirements; `environments/rl-paper.txt` pins the
+  paper's PyTorch 2.8.0, vLLM 0.11.0, Transformers 4.57.3 (CUDA 12.8).
 
 See [environments/README.md](../environments/README.md).
 

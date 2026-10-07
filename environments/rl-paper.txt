@@ -1,0 +1,28 @@
+# RL training (GRPO / ATPO) with the library versions of the paper (appendix C.2):
+# PyTorch 2.8.0, vLLM 0.11.0, Transformers 4.57.3, CUDA 12.8; Python 3.12.
+#   pip install -r environments/rl-paper.txt
+# then install flash-attn 2.8.3 and the atpo package (environments/README.md).
+# The remaining packages are the requirements of the vendored EasyR1; its own
+# requirements.txt caps Transformers at 4.57.0, which this file overrides.
+torch==2.8.0
+torchvision==0.23.0
+torchaudio==2.8.0
+vllm==0.11.0
+transformers==4.57.3
+accelerate
+codetiming
+datasets
+liger-kernel
+mathruler
+numpy<2.0.0
+omegaconf
+pandas
+peft
+pillow
+pyarrow>=15.0.0
+pylatexenc
+qwen-vl-utils
+ray[default]
+tensordict
+torchdata
+wandb

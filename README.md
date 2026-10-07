@@ -26,7 +26,8 @@ pip install -e ".[inference,vllm]"       # plus the vLLM backend
 pip install -e ".[data]"                 # build training files
 ```
 
-Training needs LLaMA-Factory (SFT) or the vendored EasyR1 (RL); see
+Training needs LLaMA-Factory (SFT) or the vendored EasyR1 (RL). `environments/` pins
+the paper's versions (PyTorch 2.8.0, vLLM 0.11.0, Transformers 4.57.3, CUDA 12.8); see
 [environments/README.md](environments/README.md).
 
 ## 1. Run a model on your videos
