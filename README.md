@@ -105,12 +105,12 @@ ATPO-C runs. See [docs/paper_setup.md](docs/paper_setup.md).
 ## Citation
 
 ```bibtex
-@article{yang2026atpo,
-  title   = {Controllable Multi-label Video Safety Detection via Adaptive Tversky Policy Optimization},
-  author  = {Yang, Guangyu and Mei, Jingbiao and Sun, Mingsheng and Chen, Jinghong and Bu, Yingtong and
-             Qin, Pengda and Chen, Da and Byrne, Bill},
-  journal = {arXiv preprint arXiv:2610.02019},
-  year    = {2026}
+@inproceedings{yang2026controllable,
+  title={Controllable Multi-label Video Safety Detection via Adaptive Tversky Policy Optimization},
+  author={Guangyu Yang and Jingbiao Mei and Mingsheng Sun and Jinghong Chen and Yingtong Bu and Pengda Qin and Da Chen and Bill Byrne},
+  booktitle={The Fortieth Annual Conference on Neural Information Processing Systems},
+  year={2026},
+  url={https://arxiv.org/abs/2610.02019}
 }
 ```
 
