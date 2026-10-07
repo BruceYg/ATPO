@@ -75,6 +75,13 @@ atpo merge-lora --config configs/sft/safewatch_qwen25vl.yaml \
 `MEDIA_DIR` is the directory relative video paths are resolved against; it
 defaults to `DATASET_DIR`.
 
+LLaMA-Factory is used unmodified, so it is installed from its upstream repository at
+a pinned commit (`environments/sft.txt`) instead of being vendored like EasyR1, which
+carries the release's patches. `atpo train` composes LLaMA-Factory's YAML from the
+config and runs `llamafactory-cli train` (with torchrun for `--nproc-per-node` > 1);
+`atpo merge-lora` runs `llamafactory-cli export`. Use `--dry-run` to write the YAML
+without LLaMA-Factory installed.
+
 `configs/sft/base.yaml` trains one epoch of LoRA (rank 64, alpha 128, all linear
 layers) with learning rate 1e-5 (cosine, 10% warm-up), batch 1 per device with
 gradient accumulation 8, maximum sequence length 24,576, a frozen vision tower, and

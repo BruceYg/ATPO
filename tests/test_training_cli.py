@@ -105,6 +105,31 @@ def test_preflight_rejects_missing_paths(workspace):
         cli_main(bad)
 
 
+def test_sft_without_llamafactory_explains_how_to_install(tmp_path, monkeypatch):
+    from atpo.configuration import ConfigError
+
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data" / "dataset_info.json").write_text(json.dumps({"safewatch_sft": {"file_name": "sft.jsonl"}}))
+    (tmp_path / "data" / "sft.jsonl").write_text("")
+    monkeypatch.setenv("PATH", str(tmp_path / "empty-bin"))
+    with pytest.raises(ConfigError, match="environments/sft.txt"):
+        cli_main(["train", "--config", str(REPO_ROOT / "configs" / "sft" / "safewatch_qwen25vl.yaml"),
+                  "--output-dir", str(tmp_path / "run"), "--var", f"DATASET_DIR={tmp_path / 'data'}"])
+
+
+def test_console_reports_user_errors_without_traceback(tmp_path, monkeypatch, capsys):
+    from atpo.cli import console_main
+
+    monkeypatch.delenv("ATPO_DEBUG", raising=False)
+    missing = ["train", "--config", str(REPO_ROOT / "configs" / "sft" / "safewatch_qwen25vl.yaml"),
+               "--output-dir", str(tmp_path / "run"), "--var", f"DATASET_DIR={tmp_path / 'nowhere'}"]
+    assert console_main(missing) == 2
+    assert capsys.readouterr().err.startswith("atpo: error: ")
+    monkeypatch.setenv("ATPO_DEBUG", "1")
+    with pytest.raises(PreflightError):
+        console_main(missing)
+
+
 def test_sft_dry_run(tmp_path):
     (tmp_path / "data").mkdir()
     (tmp_path / "data" / "sft.jsonl").write_text("{}\n")

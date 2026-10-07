@@ -13,6 +13,7 @@ import copy
 import json
 import os
 import shlex
+import shutil
 import subprocess
 from pathlib import Path
 from typing import Any, Mapping, Optional
@@ -104,4 +105,8 @@ def launch_llamafactory(
     if dry_run:
         print(f"[dry-run] wrote {yaml_path}\n[dry-run] would run: {record['command']}")
         return 0
+    if shutil.which("llamafactory-cli") is None:
+        raise ConfigError("llamafactory-cli not found on PATH; install LLaMA-Factory with "
+                          "`pip install -r environments/sft.txt` (see environments/README.md). "
+                          f"The composed config is at {yaml_path}")
     return subprocess.run(cli, cwd=output_dir, env=env, check=False).returncode

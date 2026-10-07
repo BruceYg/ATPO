@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any, Optional, Sequence
@@ -601,5 +602,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     return int(args.func(args) or 0)
 
 
+def _is_user_error(exc: BaseException) -> bool:
+    """Errors raised by the package for bad input or configuration, and missing files."""
+    if isinstance(exc, FileNotFoundError):
+        return True
+    return isinstance(exc, (ValueError, RuntimeError)) and type(exc).__module__.startswith("atpo.")
+
+
+def console_main(argv: Optional[Sequence[str]] = None) -> int:
+    """Entry point of the ``atpo`` command: user errors are printed without a traceback
+    (set ATPO_DEBUG=1 to see it); anything else propagates."""
+    try:
+        return main(argv)
+    except Exception as exc:
+        if os.environ.get("ATPO_DEBUG") or not _is_user_error(exc):
+            raise
+        print(f"atpo: error: {exc}", file=sys.stderr)
+        return 2
+
+
 if __name__ == "__main__":  # pragma: no cover
-    sys.exit(main())
+    sys.exit(console_main())
