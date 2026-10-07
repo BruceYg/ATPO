@@ -1,11 +1,11 @@
-# Paper metadata from https://arxiv.org/abs/2610.02019 (retrieved 2026-10-07).
-# Add `repository-code:` once the repository is public.
+# Preferred citation supplied by the paper authors.
 cff-version: 1.2.0
 message: "If you use this software, please cite the paper below."
 type: software
 title: "ATPO: Adaptive Tversky Policy Optimization for controllable multi-label video safety detection"
 version: 0.1.0.dev0
 license: MIT
+repository-code: "https://github.com/BruceYg/ATPO"
 authors: &authors
   - given-names: Guangyu
     family-names: Yang
@@ -24,10 +24,9 @@ authors: &authors
   - given-names: Bill
     family-names: Byrne
 preferred-citation:
-  type: article
+  type: conference-paper
   title: "Controllable Multi-label Video Safety Detection via Adaptive Tversky Policy Optimization"
   authors: *authors
   year: 2026
-  journal: "arXiv preprint arXiv:2610.02019"
-  doi: 10.48550/arXiv.2610.02019
+  collection-title: "The Fortieth Annual Conference on Neural Information Processing Systems"
   url: "https://arxiv.org/abs/2610.02019"
