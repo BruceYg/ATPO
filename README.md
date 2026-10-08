@@ -11,13 +11,6 @@ positives and false negatives a controller adapts during training, steering the
 ratio of misses to false alarms towards a target. ATPO-G uses one global target;
 ATPO-C sets a target per category.
 
-> **Pre-release.**
->
-> - No checkpoint has been published yet. The model names below need a local
->   checkpoint until then.
-> - Inference has been tested on a GPU. Training has been tested on CPU
->   (configurations, controller, checkpointing); GPU training runs are pending.
-
 ## Install
 
 ```bash
