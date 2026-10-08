@@ -1,5 +1,7 @@
 # ATPO: Adaptive Tversky Policy Optimization
 
+> **🎉 Accepted to NeurIPS 2026!**
+
 Code for *Controllable Multi-label Video Safety Detection via Adaptive Tversky
 Policy Optimization* ([arXiv:2610.02019](https://arxiv.org/abs/2610.02019)).
 
